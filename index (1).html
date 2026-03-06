@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sila Djallo — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161e;
+      --border: #1e2330;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --accent: #5b8dee;
+      --accent2: #38d9a9;
+      --tag-bg: #1a1f2e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(13,15,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 13px;
+      letter-spacing: 0.03em; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 48px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-inner { max-width: 640px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--accent2);
+      background: rgba(56,217,169,0.08);
+      border: 1px solid rgba(56,217,169,0.2);
+      padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-tag::before { content: '●'; font-size: 8px; }
+    h1 {
+      font-size: clamp(40px, 7vw, 64px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 span { color: var(--accent); }
+    .hero-sub {
+      margin-top: 20px;
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-cta {
+      display: flex; gap: 14px; margin-top: 36px;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px; border-radius: 8px;
+      font-size: 13px; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+      cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #4a7de0; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+    /* SECTIONS */
+    section {
+      max-width: 900px; margin: 0 auto;
+      padding: 80px 48px;
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 28px; font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 40px;
+    }
+    .divider {
+      border: none; border-top: 1px solid var(--border);
+      max-width: 900px; margin: 0 auto;
+    }
+
+    /* ABOUT */
+    .about-text {
+      font-size: 16px; color: var(--muted);
+      max-width: 580px; line-height: 1.8;
+    }
+    .about-text strong { color: var(--text); }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column;
+      animation: fadeUp 0.5s ease both;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .card-icon {
+      width: 40px; height: 40px;
+      background: rgba(91,141,238,0.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      margin-bottom: 18px;
+    }
+    .card h3 {
+      font-size: 15px; font-weight: 600;
+      margin-bottom: 10px; line-height: 1.4;
+    }
+    .card p { font-size: 13px; color: var(--muted); flex: 1; line-height: 1.6; }
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin: 16px 0;
+    }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--accent);
+      background: rgba(91,141,238,0.1);
+      border: 1px solid rgba(91,141,238,0.2);
+      padding: 3px 10px; border-radius: 4px;
+    }
+    .card-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600;
+      color: var(--accent); text-decoration: none;
+      margin-top: auto; transition: gap 0.2s;
+    }
+    .card-link:hover { gap: 10px; }
+    .card-link::after { content: '→'; }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .skill-group h4 {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--accent2); margin-bottom: 14px;
+    }
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .skill-list li {
+      font-size: 13px; color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .skill-list li::before { content: '▸'; color: var(--accent); font-size: 10px; }
+
+    /* CONTACT */
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      display: flex; flex-direction: column;
+      align-items: flex-start; gap: 24px;
+    }
+    .contact-card p { color: var(--muted); font-size: 15px; max-width: 440px; }
+    .contact-links { display: flex; gap: 14px; flex-wrap: wrap; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; color: var(--text);
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      padding: 10px 18px; border-radius: 8px;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 32px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 18px; }
+      .hero, section { padding-left: 20px; padding-right: 20px; }
+      .contact-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">sila.djallo</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">CS Student · Netherlands</div>
+      <h1>Hi, I'm <span>Sila Djallo</span></h1>
+      <p class="hero-sub">
+        Computer Science student passionate about Artificial Intelligence, Data Engineering, and Interactive Systems.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">// about me</div>
+    <h2>A bit about me</h2>
+    <p class="about-text">
+      I'm a <strong>Computer Science student in the Netherlands</strong>, interested in building things that matter.
+      My focus areas are <strong>Artificial Intelligence</strong>, <strong>Data Engineering</strong>, and <strong>Interactive Systems</strong>.
+      I enjoy working on projects that involve data processing, software development, and interactive applications —
+      this portfolio showcases some of the work I built during my studies.
+    </p>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">// projects</div>
+    <h2>What I've built</h2>
+    <div class="projects-grid">
+
+      <div class="card">
+        <div class="card-icon">🏥</div>
+        <h3>Healthcare Data Engineering Pipeline</h3>
+        <p>A data pipeline for processing Electronic Health Record (EHR) datasets — cleaning, transforming, and storing healthcare data in a structured SQL database for easier analysis.</p>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">SQLite</span>
+          <span class="tag">ETL</span>
+        </div>
+        <a href="https://github.com/zuydsila/healthcare-data-engineering-pipeline" target="_blank" class="card-link">View on GitHub</a>
+      </div>
+
+      <div class="card" style="animation-delay:0.1s">
+        <div class="card-icon">🧒</div>
+        <h3>JDM Exercise Support System</h3>
+        <p>An interactive application to help children with Juvenile Dermatomyositis (JDM) stay consistent with daily physiotherapy exercises through an engaging and accessible interface.</p>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Software Eng.</span>
+          <span class="tag">UI Design</span>
+        </div>
+        <a href="https://github.com/zuydsila/jdm-exercise-support-system" target="_blank" class="card-link">View on GitHub</a>
+      </div>
+
+      <div class="card" style="animation-delay:0.2s">
+        <div class="card-icon">🌤️</div>
+        <h3>Weather Data Visualization</h3>
+        <p>An interactive dashboard for exploring weather datasets through charts and graphs, combining a Python/Flask backend with a JavaScript and D3.js frontend.</p>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Flask</span>
+          <span class="tag">D3.js</span>
+          <span class="tag">SQLite</span>
+        </div>
+        <a href="https://github.com/zuydsila/weather-data-visualization" target="_blank" class="card-link">View on GitHub</a>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">// skills</div>
+    <h2>Tools & Technologies</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4>Programming</h4>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>JavaScript</li>
+          <li>SQL</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Frameworks</h4>
+        <ul class="skill-list">
+          <li>Flask</li>
+          <li>D3.js</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Data & Storage</h4>
+        <ul class="skill-list">
+          <li>SQLite</li>
+          <li>ETL Pipelines</li>
+          <li>Data Cleaning</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Tools</h4>
+        <ul class="skill-list">
+          <li>Git</li>
+          <li>GitHub</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">// contact</div>
+    <h2>Get in touch</h2>
+    <div class="contact-card">
+      <p>I'm always open to connecting — whether it's about projects, collaborations, or just a chat about tech.</p>
+      <div class="contact-links">
+        <a href="/cdn-cgi/l/email-protection#efdddbdfdedfd6db8b858e838380af959a968bc18183" class="contact-link">
+          ✉ <span class="__cf_email__" data-cfemail="1426202425242d20707e7578787b546e616d703a7a78">[email&#160;protected]</span>
+        </a>
+        <a href="https://github.com/zuydsila" target="_blank" class="contact-link">
+          ⌥ github.com/zuydsila
+        <
